@@ -1,3 +1,5 @@
+![favicon.png](https://github.com/5hanazar/serce/blob/main/static/favicon.png)
+
 ## Setup
 
 Clone the repo and install dependencies with `npm install` (or `pnpm install` or `yarn`).<br/>

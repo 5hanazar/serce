@@ -1,5 +1,5 @@
 {
-	"name": "sveltekit-prisma",
+	"name": "serce",
 	"version": "0.0.1",
 	"prisma": {
 		"seed": "tsx prisma/seed.ts"
