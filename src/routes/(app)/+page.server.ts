@@ -7,7 +7,7 @@ export async function load({ url, fetch, locals }) {
     const res = await fetch(url.pathname)    
     if (res.ok) {
         const allMembers: Member[] = await res.json()
-        return { user, allMembers }
+        return { allMembers }
     }
     throw error(res.status)
 }
