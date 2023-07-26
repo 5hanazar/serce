@@ -19,6 +19,14 @@ async function main() {
             lastOnline: now
 		},
 	});
+    await prisma.post.create({
+		data: {
+			active: true,
+			memberId: user.id,
+			description: "Today is cold",
+			createdDate: now
+		},
+	});
     console.log(`A new member was inserted.\nName: ${user.name}\nPassword: ${user.password}`);
 }
 main()
