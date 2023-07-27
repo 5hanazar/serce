@@ -15,6 +15,11 @@
     </div>
 {/each}
 
+<form method="POST">
+    <input type="text" name="description">
+    <button>Submit</button>
+</form>
+
 <style>
     div {
         box-shadow: 0 0 4px #00000030;

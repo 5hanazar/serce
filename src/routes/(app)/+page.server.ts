@@ -1,7 +1,7 @@
-/** @type {import('./$types').PageServerLoad} */
-import prisma from '$lib';
+import prisma, { getLocalTimestampInSeconds } from '$lib';
 import type { Member } from '@prisma/client';
 
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
     const user: Member = locals.user
     const posts = await prisma.post.findMany({
@@ -12,12 +12,18 @@ export async function load({ locals }) {
     return { posts }
 }
 
-/*export async function load({ url, fetch, locals }) {
-    const user: Member = locals.user
-    const res = await fetch(url.pathname)    
-    if (res.ok) {
-        const allMembers: Member[] = await res.json()
-        return { allMembers }
+/** @type {import('./$types').Actions} */
+export const actions = {
+    default: async ({ locals, request }) => {
+        const user: Member = locals.user
+        const data = await request.formData();
+        await prisma.post.create({
+            data: {
+                active: true,
+                memberId: user.id,
+                description: data.get('description')?.toString() || '',
+                createdDate: getLocalTimestampInSeconds()
+            }
+        })
     }
-    throw error(res.status)
-}*/
+};
