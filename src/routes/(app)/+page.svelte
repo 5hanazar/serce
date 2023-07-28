@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { formToObj, formatTime } from '$lib/front';
+	import { clearForm, formToObj, formatTime } from '$lib/front';
 	export let data;
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -14,14 +14,22 @@
 			},
 			body: JSON.stringify({ description: data.description }),
 		});
-		if (response.ok) invalidateAll();
+		if (response.ok) {
+            clearForm(e)
+            await invalidateAll();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
 	};
 </script>
 
 <h1>Home</h1>
 {#each data.posts as post}
     <div>
-        {post.member.fullName}
+        {#if data.user.id == post.memberId}
+            <b>• {post.member.fullName}</b>
+        {:else}
+            {post.member.fullName}
+        {/if}
         <p>
             {post.description}
         </p>

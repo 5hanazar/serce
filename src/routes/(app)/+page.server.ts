@@ -9,7 +9,7 @@ export async function load({ locals }) {
             member: true
         }
     })
-    return { posts }
+    return { user, posts }
 }
 
 /** @type {import('./$types').Actions} */
