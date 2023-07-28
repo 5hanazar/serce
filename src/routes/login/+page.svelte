@@ -1,33 +1,33 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
+	import { clearForm, formToObj } from "$lib/front";
+    let status = " ";
 	const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
-		const response = await fetch(`/login`, {
+        const data = formToObj(e)        
+		const response = await fetch($page.url.pathname, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ name, password }),
+			body: JSON.stringify({ name: data.name, password: data.password }),
 		});
 		if (response.ok) await goto(`/`, { replaceState: true });
 		else if (response.status == 401) {
 			status = "Invalid credentials";
-			name = "";
-			password = "";
+            clearForm(e)
 		}
 	};
-	let status = " ";
-	let name = "";
-	let password = "";
 </script>
 
 <section>
 	<form on:submit={submit}>
 		<label for="name">Name</label>
-		<input name="name" type="text" bind:value={name} />
+		<input name="name" type="text" />
 		<label for="password">Password</label>
-		<input name="password" type="password" bind:value={password} />
+		<input name="password" type="password" />
 		<br />
 		<button>Login</button>
 	</form>

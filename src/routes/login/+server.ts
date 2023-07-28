@@ -1,8 +1,8 @@
-/** @type {import('./$types').RequestHandler} */
-import prisma from '$lib';
+import prisma from '$lib/back';
 import jwt from 'jsonwebtoken';
 import { PRIVATE_KEY } from '$env/static/private'
 
+/** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
     const user = await request.json();
     const buf = await prisma.member.findUnique({

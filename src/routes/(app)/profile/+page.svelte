@@ -1,6 +1,6 @@
 <script>
 	import { invalidateAll } from "$app/navigation";
-	import { formatTime } from "$lib/shared";
+	import { formatTime } from "$lib/front";
     export let data
     const resetCookieAndRefresh = () => {
 		document.cookie = `user=`;

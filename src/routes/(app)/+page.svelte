@@ -1,7 +1,21 @@
-<script>
-	import { formatTime } from '$lib/shared';
-
+<script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { formToObj, formatTime } from '$lib/front';
 	export let data;
+    const submit = async (e: SubmitEvent) => {
+		e.preventDefault();
+        const data = formToObj(e)
+		const response = await fetch($page.url.pathname, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+			body: JSON.stringify({ description: data.description }),
+		});
+		if (response.ok) invalidateAll();
+	};
 </script>
 
 <h1>Home</h1>
@@ -15,7 +29,7 @@
     </div>
 {/each}
 
-<form method="POST">
+<form on:submit={submit}>
     <input type="text" name="description">
     <button>Submit</button>
 </form>
