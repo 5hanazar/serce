@@ -30,7 +30,9 @@
         <button on:click={() => onStar(post.id)}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class:hasStar={post.hasStar} fill="currentColor"><path d="m17.55 1.66 3.6 7.31c.26.51.74.86 1.3.94l8.07 1.18c1.42.2 1.98 1.94.96 2.94l-5.84 5.69c-.4.4-.6.97-.5 1.52l1.38 8.04a1.72 1.72 0 0 1-2.5 1.82l-7.22-3.8c-.5-.26-1.1-.26-1.6 0l-7.22 3.8a1.72 1.72 0 0 1-2.5-1.82l1.38-8.04c.1-.55-.1-1.12-.5-1.52l-5.84-5.7c-1.02-.99-.46-2.73.96-2.93l8.07-1.17a1.72 1.72 0 0 0 1.3-.95l3.6-7.31a1.72 1.72 0 0 1 3.1 0z"/></svg>
         </button>
-        <small>{post.countStars > 0 ? post.countStars : ''}</small>
+        {#if post.countStars > 0}
+            <small>{post.countStars}</small>
+        {/if}
     </div>
 </article>
 
