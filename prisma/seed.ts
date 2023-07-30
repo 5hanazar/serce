@@ -6,7 +6,10 @@ const getLocalTimestampInSeconds = () => {
 }
 async function main() {
 	const now = getLocalTimestampInSeconds();
-	const user = await prisma.member.create({
+    await prisma.star.deleteMany()
+    await prisma.post.deleteMany()
+    await prisma.member.deleteMany()
+	const john = await prisma.member.create({
 		data: {
 			active: true,
 			name: "john",
@@ -19,7 +22,51 @@ async function main() {
             lastOnline: now
 		},
 	});
-    console.log(`A new member was inserted.\nName: ${user.name}\nPassword: ${user.password}`);
+    const johnPost = await prisma.post.create({
+		data: {
+			active: true,
+			memberId: john.id,
+			description: "Today is cold",
+			createdDate: now
+		},
+	});
+    const bond = await prisma.member.create({
+		data: {
+			active: true,
+			name: "bond",
+			password: "007",
+			fullName: "James Bond",
+			phone: "",
+			address: "",
+			description: "",
+			createdDate: now,
+            lastOnline: now
+		},
+	});
+    const bondPost = await prisma.post.create({
+		data: {
+			active: true,
+			memberId: bond.id,
+			description: "Today is warm",
+			createdDate: now
+		},
+	});
+    console.log(`${john.name} | ${john.password}\n${bond.name} | ${bond.password}`);
+
+    await prisma.star.create({
+        data: {
+            memberId: john.id,
+            postId: bondPost.id,
+            createdDate: now
+        }
+    })
+    await prisma.star.create({
+        data: {
+            memberId: bond.id,
+            postId: johnPost.id,
+            createdDate: now
+        }
+    })
 }
 main()
 	.then(async () => {

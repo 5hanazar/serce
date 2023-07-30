@@ -22,6 +22,31 @@ model Member {
     description String
     createdDate Int
     lastOnline  Int
+    posts       Post[]
+    stars       Star[]
 
     @@map("member")
+}
+
+model Post {
+    id          Int     @id @default(autoincrement())
+    active      Boolean
+    memberId    Int
+    member      Member  @relation(fields: [memberId], references: [id])
+    description String
+    createdDate Int
+    stars       Star[]
+
+    @@map("post")
+}
+
+model Star {
+    member      Member @relation(fields: [memberId], references: [id])
+    post        Post   @relation(fields: [postId], references: [id])
+    memberId    Int
+    postId      Int
+    createdDate Int
+
+    @@id([memberId, postId])
+    @@map("star")
 }

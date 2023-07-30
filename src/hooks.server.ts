@@ -1,6 +1,6 @@
 import * as cookie from "cookie";
 import jwt from "jsonwebtoken";
-import prisma, { getLocalTimestampInSeconds } from "$lib";
+import prisma, { getLocalTimestampInSeconds } from "$lib/back";
 import { PRIVATE_KEY } from '$env/static/private'
 
 /** @type {import('@sveltejs/kit').Handle} */

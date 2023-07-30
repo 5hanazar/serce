@@ -1,10 +1,6 @@
 <script>
 	import { invalidateAll } from "$app/navigation";
 	export let data;
-	const resetCookieAndRefresh = () => {
-		document.cookie = `user=`;
-		invalidateAll();
-	};
 </script>
 
 <header>
