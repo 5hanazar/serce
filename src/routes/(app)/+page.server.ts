@@ -1,15 +1,32 @@
-import prisma, { getLocalTimestampInSeconds } from '$lib/back';
-import type { Member } from '@prisma/client';
+import prisma, { getLocalTimestampInSeconds } from "$lib/back";
+import type { Member } from "@prisma/client";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
-    const user: Member = locals.user
-    const posts = await prisma.post.findMany({
-        include: {
-            member: true
-        }
-    })
-    return { user, posts }
+	const user: Member = locals.user;
+	const buf = await prisma.post.findMany({
+		include: {
+			member: true,
+		},
+	});
+	const posts = await Promise.all(
+		buf.map(async (r) => {
+			r.countStars = await prisma.star.count({
+				where: {
+					postId: r.id,
+				},
+			});
+            const hasStar = await prisma.star.findFirst({
+                where: {
+                    memberId: user.id,
+                    postId: r.id
+                }
+            })
+            r.hasStar = hasStar != null
+			return r;
+		})
+	);
+	return { user, posts };
 }
 
 /** @type {import('./$types').Actions} */

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { clearForm, formToObj, formatTime } from '$lib/front';
+	import Card from '$lib/card.svelte';
+	import { clearForm, formToObj } from '$lib/front';
 	export let data;
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -24,27 +25,10 @@
 
 <h1>Home</h1>
 {#each data.posts as post}
-    <div>
-        {#if data.user.id == post.memberId}
-            <b>• {post.member.fullName}</b>
-        {:else}
-            {post.member.fullName}
-        {/if}
-        <p>
-            {post.description}
-        </p>
-        {formatTime(post.createdDate)}
-    </div>
+    <Card post={post} />
 {/each}
 
 <form on:submit={submit}>
     <input type="text" name="description">
     <button>Submit</button>
 </form>
-
-<style>
-    div {
-        box-shadow: 0 0 4px #00000030;
-        padding: 1rem;
-    }
-</style>
