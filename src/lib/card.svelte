@@ -40,7 +40,9 @@
 		<button>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><path d="M5.2 23A5 5 0 0 1 0 18V6C0 3.1 2.3.8 5.2.8h21.6C29.7.8 32 3.1 32 6v12a5 5 0 0 1-5.2 5H18l-8.4 7.8a2 2 0 0 1-3.2-1.6V23H5.2z" /></svg>
 		</button>
-		<small>{formatGreek(2134)}</small>
+        {#if post.countComments > 0}
+			<small>{formatGreek(post.countComments)}</small>
+		{/if}
 		<StarButton hasStar={post.hasStar} onStar={() => onStar(post.id)} />
 		{#if post.countStars > 0}
 			<small>{formatGreek(post.countStars)}</small>

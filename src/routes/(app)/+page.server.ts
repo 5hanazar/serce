@@ -16,6 +16,11 @@ export async function load({ locals }) {
 					postId: r.id,
 				},
 			});
+            r.countComments = await prisma.comment.count({
+				where: {
+					postId: r.id,
+				},
+			});
             const hasStar = await prisma.star.findFirst({
                 where: {
                     memberId: user.id,

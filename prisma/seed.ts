@@ -27,6 +27,7 @@ async function main() {
 			active: true,
 			memberId: john.id,
 			description: "Today is cold",
+            lastUpdate: now,
 			createdDate: now
 		},
 	});
@@ -48,6 +49,7 @@ async function main() {
 			active: true,
 			memberId: bond.id,
 			description: "Today is warm",
+            lastUpdate: now,
 			createdDate: now
 		},
 	});
@@ -64,6 +66,16 @@ async function main() {
         data: {
             memberId: bond.id,
             postId: johnPost.id,
+            createdDate: now
+        }
+    })
+    await prisma.comment.create({
+        data: {
+            memberId: john.id,
+            postId: bondPost.id,
+            parentId: 0,
+            description: 'Nice',
+            lastUpdate: now,
             createdDate: now
         }
     })
