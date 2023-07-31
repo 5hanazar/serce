@@ -25,7 +25,7 @@
 
 <h1>Home</h1>
 {#each data.posts as post}
-    <Card post={post} />
+    <Card memberId={data.user.id} post={post} />
 {/each}
 
 <form on:submit={submit}>

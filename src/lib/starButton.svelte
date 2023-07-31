@@ -29,6 +29,7 @@
         border: none;
         background: none;
         cursor: pointer;
+        margin-left: 1rem;
     }
 
     .animate .star {
@@ -54,7 +55,7 @@
 
     .star {
         scale: 1;
-        color: #eee;
+        color: #ddd;
     }
     .ring, .g1 {
         opacity: 0;

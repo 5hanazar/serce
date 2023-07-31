@@ -49,7 +49,7 @@ const COUNT_FORMATS =
     limit: 1e15
   }
 ];
-export const formatStar = (value: number) => {
+export const formatGreek = (value: number) => {
     const format = COUNT_FORMATS.find(format => (value < format.limit));
     value = (1000 * value / format!.limit);
     value = Math.floor(value * 10) / 10; // keep one decimal number, only if needed
