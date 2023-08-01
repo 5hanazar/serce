@@ -57,15 +57,13 @@
 		width: 1rem;
 		color: #ddd;
 	}
-	button {
+	div > button {
 		border: none;
 		background: none;
 		cursor: pointer;
 		padding: 0;
-	}
-    button, a {
         margin-left: 1rem;
-    }
+	}
 	.edit {
 		display: flex;
 		margin: 0;

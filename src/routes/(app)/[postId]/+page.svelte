@@ -2,7 +2,7 @@
 	import { invalidateAll } from "$app/navigation";
 	import Comment from "$lib/comment.svelte";
 	import Description from "$lib/description.svelte";
-	import { formatGreek, formatTime } from "$lib/front";
+	import { clearForm, formToObj, formatGreek, formatTime } from "$lib/front";
 	import LikeButton from "$lib/likeButton.svelte";
 	export let data;
 
@@ -18,6 +18,23 @@
 		if (response.ok) {
 			await invalidateAll();
 		}
+	};
+    const submit = async (e: SubmitEvent) => {
+		e.preventDefault();
+        const form = formToObj(e)
+		const response = await fetch('/comment', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+			body: JSON.stringify({ postId: data.post.id, description: form.description }),
+		});
+		if (response.ok) {
+            clearForm(e)
+            await invalidateAll();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
 	};
 </script>
 
@@ -39,6 +56,11 @@
 	{/if}
 </div>
 <h3>Comments</h3>
+
+<form on:submit={submit}>
+    <input type="text" name="description" required>
+    <button>Submit</button>
+</form>
 {#each data.post.comments as comment}
     <Comment userId={data.user.id} comment={comment} />
 {/each}
@@ -58,13 +80,13 @@
 		width: 1rem;
 		color: #ddd;
 	}
-	button {
+	div > button {
 		border: none;
 		background: none;
 		cursor: pointer;
 		padding: 0;
 	}
-	button, svg {
+	div > button, div > svg {
 		margin-left: 1rem;
 	}
 	.edit {

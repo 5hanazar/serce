@@ -6,14 +6,14 @@
 	export let data;
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
-        const data = formToObj(e)
+        const form = formToObj(e)
 		const response = await fetch($page.url.pathname, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ description: data.description }),
+			body: JSON.stringify({ description: form.description }),
 		});
 		if (response.ok) {
             clearForm(e)
