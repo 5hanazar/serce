@@ -8,6 +8,7 @@ async function main() {
 	const now = getLocalTimestampInSeconds();
     await prisma.likeOfPost.deleteMany()
     await prisma.likeOfComment.deleteMany()
+    await prisma.follow.deleteMany()
     await prisma.comment.deleteMany()
     await prisma.post.deleteMany()
     await prisma.member.deleteMany()
@@ -88,7 +89,13 @@ async function main() {
             createdDate: now
         }
     })
-    // test commit
+    await prisma.follow.create({
+        data: {
+            memberId: john.id,
+            followerId: bond.id,
+            createdDate: now
+        }
+    })
 }
 main()
 	.then(async () => {

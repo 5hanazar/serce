@@ -18,6 +18,10 @@
         <td>{data.user.fullName}</td>
     </tr>
     <tr>
+        <th>Follower Count:</th>
+        <td>{data.user.followerCount}</td>
+    </tr>
+    <tr>
         <th>Created Date:</th>
         <td>{formatTime(data.user.createdDate)}</td>
     </tr>

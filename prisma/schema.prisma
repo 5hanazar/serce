@@ -26,6 +26,8 @@ model Member {
     likedPosts    LikeOfPost[]
     comments      Comment[]
     likedComments LikeOfComment[]
+    following     Follow[]        @relation("following")
+    followers     Follow[]        @relation("follower")
 }
 
 model Post {
@@ -71,4 +73,14 @@ model LikeOfComment {
     createdDate Int
 
     @@id([memberId, commentId])
+}
+
+model Follow {
+    member      Member @relation(fields: [memberId], references: [id], name: "follower")
+    follower    Member @relation(fields: [followerId], references: [id], name: "following")
+    memberId    Int
+    followerId  Int
+    createdDate Int
+
+    @@id([memberId, followerId])
 }
