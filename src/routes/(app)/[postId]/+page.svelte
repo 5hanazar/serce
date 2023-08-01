@@ -4,7 +4,6 @@
 	import Description from "$lib/description.svelte";
 	import { formatGreek, formatTime } from "$lib/front";
 	import LikeButton from "$lib/likeButton.svelte";
-
 	export let data;
 
 	const onLikeClick = async (postId: number) => {
@@ -35,8 +34,8 @@
 		<small>{formatGreek(data.post.comments.length)}</small>
 	{/if}
 	<LikeButton isLiked={data.post.isLiked} onClick={() => onLikeClick(data.post.id)} />
-	{#if data.post.countStars > 0}
-		<small>{formatGreek(data.post.countStars)}</small>
+	{#if data.post.likeCount > 0}
+		<small>{formatGreek(data.post.likeCount)}</small>
 	{/if}
 </div>
 <h3>Comments</h3>
@@ -49,6 +48,7 @@
 		display: flex;
 		gap: 0.5rem;
         justify-content: end;
+        margin-top: 1rem;
 	}
 	small {
 		align-self: center;
@@ -75,6 +75,5 @@
 	}
     h3 {
         margin-top: 2rem;
-        margin-bottom: 1rem;
     }
 </style>

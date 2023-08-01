@@ -6,14 +6,14 @@
 	import Description from "$lib/description.svelte";
 	export let userId: number;
 	export let comment: import("@prisma/client").Comment & { member: Member };
-	const onLikeClick = async (postId: number) => {
-		const response = await fetch("/", {
+	const onLikeClick = async (commentId: number) => {
+		const response = await fetch("/comment", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ postId }),
+			body: JSON.stringify({ commentId }),
 		});
 		if (response.ok) {
 			await invalidateAll();
@@ -39,7 +39,7 @@
 
 <style>
 	article {
-		margin: 1rem 0;
+		margin-top: 1rem;
 		box-shadow: 0 0 4px #00000030;
 		padding: 1rem;
 	}
@@ -47,6 +47,7 @@
 		display: flex;
 		gap: 0.5rem;
         justify-content: end;
+        margin-top: 1rem;
 	}
 	small {
 		align-self: center;

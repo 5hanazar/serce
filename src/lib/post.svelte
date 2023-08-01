@@ -53,6 +53,7 @@
 		display: flex;
 		gap: 0.5rem;
         justify-content: end;
+        margin-top: 1rem;
 	}
 	small {
 		align-self: center;

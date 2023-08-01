@@ -30,4 +30,8 @@
 		align-self: center;
 		margin-right: auto;
 	}
+    p {
+        margin: 0;
+        margin-top: 1rem;
+    }
 </style>

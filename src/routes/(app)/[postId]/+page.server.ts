@@ -18,7 +18,7 @@ export async function load({ params, locals }) {
             postId: r.id,
         },
     });
-    r.comments = await prisma.comment.findMany({
+    const buf = await prisma.comment.findMany({
         include: {
             member: true
         },
@@ -26,6 +26,24 @@ export async function load({ params, locals }) {
             postId: r.id,
         },
     });
+    r.comments = await Promise.all(
+		buf.map(async (r) => {
+			r.likeCount = await prisma.likeOfComment.count({
+				where: {
+					commentId: r.id,
+				},
+			});
+            const isLiked = await prisma.likeOfComment.findFirst({
+                where: {
+                    memberId: user.id,
+                    commentId: r.id
+                }
+            })
+            r.isLiked = isLiked != null
+			return r;
+		})
+	);
+
     const isLiked = await prisma.likeOfPost.findFirst({
         where: {
             memberId: user.id,
