@@ -12,38 +12,35 @@ datasource db {
 }
 
 model Member {
-    id          Int       @id @default(autoincrement())
-    active      Boolean
-    name        String    @unique
-    password    String
-    fullName    String
-    phone       String
-    address     String
-    description String
-    createdDate Int
-    lastOnline  Int
-    posts       Post[]
-    stars       Star[]
-    comments    Comment[]
-
-    @@map("member")
+    id            Int             @id @default(autoincrement())
+    active        Boolean
+    name          String          @unique
+    password      String
+    fullName      String
+    phone         String
+    address       String
+    description   String
+    createdDate   Int
+    lastOnline    Int
+    posts         Post[]
+    likedPosts    LikeOfPost[]
+    comments      Comment[]
+    likedComments LikeOfComment[]
 }
 
 model Post {
-    id          Int       @id @default(autoincrement())
+    id          Int          @id @default(autoincrement())
     active      Boolean
     memberId    Int
-    member      Member    @relation(fields: [memberId], references: [id])
+    member      Member       @relation(fields: [memberId], references: [id])
     description String
     lastUpdate  Int
     createdDate Int
-    stars       Star[]
+    likes       LikeOfPost[]
     comments    Comment[]
-
-    @@map("post")
 }
 
-model Star {
+model LikeOfPost {
     member      Member @relation(fields: [memberId], references: [id])
     post        Post   @relation(fields: [postId], references: [id])
     memberId    Int
@@ -51,19 +48,27 @@ model Star {
     createdDate Int
 
     @@id([memberId, postId])
-    @@map("star")
 }
 
 model Comment {
-    id          Int    @id @default(autoincrement())
-    member      Member @relation(fields: [memberId], references: [id])
-    post        Post   @relation(fields: [postId], references: [id])
+    id          Int             @id @default(autoincrement())
+    member      Member          @relation(fields: [memberId], references: [id])
+    post        Post            @relation(fields: [postId], references: [id])
     memberId    Int
     postId      Int
     parentId    Int
     description String
     lastUpdate  Int
     createdDate Int
+    likes       LikeOfComment[]
+}
 
-    @@map("comment")
+model LikeOfComment {
+    member      Member  @relation(fields: [memberId], references: [id])
+    comment     Comment @relation(fields: [commentId], references: [id])
+    memberId    Int
+    commentId   Int
+    createdDate Int
+
+    @@id([memberId, commentId])
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Card from '$lib/card.svelte';
+	import Post from '$lib/post.svelte';
 	import { clearForm, formToObj } from '$lib/front';
 	export let data;
     const submit = async (e: SubmitEvent) => {
@@ -25,10 +25,10 @@
 
 <h1>Home</h1>
 {#each data.posts as post}
-    <Card memberId={data.user.id} post={post} />
+    <Post userId={data.user.id} post={post} />
 {/each}
 
 <form on:submit={submit}>
-    <input type="text" name="description">
+    <input type="text" name="description" required>
     <button>Submit</button>
 </form>

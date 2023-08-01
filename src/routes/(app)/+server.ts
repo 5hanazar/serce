@@ -5,12 +5,14 @@ import type { Member } from '@prisma/client';
 export async function POST({ request, locals }) {
     const user: Member = locals.user
     const data = await request.json();
+    const now = getLocalTimestampInSeconds()
     await prisma.post.create({
         data: {
             active: true,
             memberId: user.id,
             description: data.description,
-            createdDate: getLocalTimestampInSeconds()
+            lastUpdate: now,
+            createdDate: now
         }
     })
 	return new Response(null, {
@@ -21,14 +23,14 @@ export async function POST({ request, locals }) {
 export async function PUT({ request, locals }) {
 	const user: Member = locals.user
     const data = await request.json();
-    const star = await prisma.star.findFirst({
+    const likeOfPost = await prisma.likeOfPost.findFirst({
         where: {
             memberId: user.id,
             postId: data.postId
         }
     })
-    if (star == null) {
-        await prisma.star.create({
+    if (likeOfPost == null) {
+        await prisma.likeOfPost.create({
             data: {
                 memberId: user.id,
                 postId: data.postId,
@@ -36,7 +38,7 @@ export async function PUT({ request, locals }) {
             }
         })
     } else {
-        await prisma.star.delete({
+        await prisma.likeOfPost.delete({
             where: {
                 memberId_postId: {
                     memberId: user.id,
