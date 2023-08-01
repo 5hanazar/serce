@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
 	import Post from '$lib/post.svelte';
 	import { clearForm, formToObj } from '$lib/front';
 	export let data;
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
-		const response = await fetch($page.url.pathname, {
+		const response = await fetch('/posts', {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

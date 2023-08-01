@@ -7,7 +7,7 @@
 	export let userId: number;
 	export let comment: import("@prisma/client").Comment & { member: Member };
 	const onLikeClick = async (commentId: number) => {
-		const response = await fetch("/comment", {
+		const response = await fetch("/comments", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

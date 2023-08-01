@@ -8,7 +8,7 @@
 
 <div>
     <img src="" alt="" />
-    <b>{member.fullName}</b>
+    <a href={`/members/${member.name}`}>{member.fullName}</a>
     <small>{formatTime(createdDate)}</small>
 </div>
 <p>
@@ -26,9 +26,11 @@
 		display: flex;
 		gap: 0.5rem;
 	}
-	b {
+	a {
 		align-self: center;
 		margin-right: auto;
+        color: #000;
+        font-weight: bold;
 	}
     p {
         margin: 0;

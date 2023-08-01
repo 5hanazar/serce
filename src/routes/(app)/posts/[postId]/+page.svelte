@@ -7,7 +7,7 @@
 	export let data;
 
 	const onLikeClick = async (postId: number) => {
-		const response = await fetch("/", {
+		const response = await fetch("/posts", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -22,7 +22,7 @@
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
-		const response = await fetch('/comment', {
+		const response = await fetch('/comments', {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

@@ -14,7 +14,7 @@
 			},
 			body: JSON.stringify({ name: data.name, password: data.password }),
 		});
-		if (response.ok) await goto(`/`, { replaceState: true });
+		if (response.ok) await goto(`/posts`, { replaceState: true });
 		else if (response.status == 401) {
 			status = "Invalid credentials";
             clearForm(e)

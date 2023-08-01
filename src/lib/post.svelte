@@ -7,7 +7,7 @@
 	export let userId: number;
 	export let post: import("@prisma/client").Post & { member: Member };
 	const onLikeClick = async (postId: number) => {
-		const response = await fetch("/", {
+		const response = await fetch("/posts", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -30,7 +30,7 @@
 				<small>Edit</small>
 			</button>
 		{/if}
-		<a href={`/${post.id}`}>
+		<a href={`/posts/${post.id}`}>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><path d="M5.2 23A5 5 0 0 1 0 18V6C0 3.1 2.3.8 5.2.8h21.6C29.7.8 32 3.1 32 6v12a5 5 0 0 1-5.2 5H18l-8.4 7.8a2 2 0 0 1-3.2-1.6V23H5.2z" /></svg>
         </a>
         {#if post.commentCount > 0}
