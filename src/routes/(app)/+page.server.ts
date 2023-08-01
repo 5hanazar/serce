@@ -11,18 +11,23 @@ export async function load({ locals }) {
 	});
 	const posts = await Promise.all(
 		buf.map(async (r) => {
-			r.countStars = await prisma.star.count({
+			r.likeCount = await prisma.likeOfPost.count({
 				where: {
 					postId: r.id,
 				},
 			});
-            const hasStar = await prisma.star.findFirst({
+            r.commentCount = await prisma.comment.count({
+				where: {
+					postId: r.id,
+				},
+			});
+            const isLiked = await prisma.likeOfPost.findFirst({
                 where: {
                     memberId: user.id,
                     postId: r.id
                 }
             })
-            r.hasStar = hasStar != null
+            r.isLiked = isLiked != null
 			return r;
 		})
 	);

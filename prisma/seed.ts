@@ -6,7 +6,9 @@ const getLocalTimestampInSeconds = () => {
 }
 async function main() {
 	const now = getLocalTimestampInSeconds();
-    await prisma.star.deleteMany()
+    await prisma.likeOfPost.deleteMany()
+    await prisma.likeOfComment.deleteMany()
+    await prisma.comment.deleteMany()
     await prisma.post.deleteMany()
     await prisma.member.deleteMany()
 	const john = await prisma.member.create({
@@ -27,6 +29,7 @@ async function main() {
 			active: true,
 			memberId: john.id,
 			description: "Today is cold",
+            lastUpdate: now,
 			createdDate: now
 		},
 	});
@@ -48,22 +51,40 @@ async function main() {
 			active: true,
 			memberId: bond.id,
 			description: "Today is warm",
+            lastUpdate: now,
 			createdDate: now
 		},
 	});
     console.log(`${john.name} | ${john.password}\n${bond.name} | ${bond.password}`);
 
-    await prisma.star.create({
+    await prisma.likeOfPost.create({
         data: {
             memberId: john.id,
             postId: bondPost.id,
             createdDate: now
         }
     })
-    await prisma.star.create({
+    await prisma.likeOfPost.create({
         data: {
             memberId: bond.id,
             postId: johnPost.id,
+            createdDate: now
+        }
+    })
+    const johnComment = await prisma.comment.create({
+        data: {
+            memberId: john.id,
+            postId: bondPost.id,
+            parentId: 0,
+            description: 'Nice',
+            lastUpdate: now,
+            createdDate: now
+        }
+    })
+    await prisma.likeOfComment.create({
+        data: {
+            memberId: bond.id,
+            commentId: johnComment.id,
             createdDate: now
         }
     })

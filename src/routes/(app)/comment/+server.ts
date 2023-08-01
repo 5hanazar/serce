@@ -1,15 +1,16 @@
-import prisma, { getLocalTimestampInSeconds } from '$lib/back';
-import type { Member } from '@prisma/client';
+import prisma, { getLocalTimestampInSeconds } from "$lib/back";
+import type { Member } from "@prisma/client";
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, locals }) {
     const user: Member = locals.user
     const data = await request.json();
     const now = getLocalTimestampInSeconds()
-    await prisma.post.create({
+    await prisma.comment.create({
         data: {
-            active: true,
             memberId: user.id,
+            postId: data.postId,
+            parentId: 0,
             description: data.description,
             lastUpdate: now,
             createdDate: now
@@ -23,26 +24,26 @@ export async function POST({ request, locals }) {
 export async function PUT({ request, locals }) {
 	const user: Member = locals.user
     const data = await request.json();
-    const likeOfPost = await prisma.likeOfPost.findFirst({
+    const likeOfComment = await prisma.likeOfComment.findFirst({
         where: {
             memberId: user.id,
-            postId: data.postId
+            commentId: data.commentId
         }
     })
-    if (likeOfPost == null) {
-        await prisma.likeOfPost.create({
+    if (likeOfComment == null) {
+        await prisma.likeOfComment.create({
             data: {
                 memberId: user.id,
-                postId: data.postId,
+                commentId: data.commentId,
                 createdDate: getLocalTimestampInSeconds()
             }
         })
     } else {
-        await prisma.likeOfPost.delete({
+        await prisma.likeOfComment.delete({
             where: {
-                memberId_postId: {
+                memberId_commentId: {
                     memberId: user.id,
-                    postId: data.postId
+                    commentId: data.commentId
                 }
             }
         })
