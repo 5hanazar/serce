@@ -20,8 +20,8 @@ model Member {
     phone         String
     address       String
     description   String
-    createdDate   Int
     lastOnline    Int
+    createdDate   Int
     posts         Post[]
     likedPosts    LikeOfPost[]
     comments      Comment[]

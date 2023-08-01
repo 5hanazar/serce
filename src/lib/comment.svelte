@@ -22,7 +22,7 @@
 </script>
 
 <article>
-    <Description member={comment.member} description={comment.description} createdDate={comment.createdDate} />
+    <Description userId={userId} member={comment.member} description={comment.description} createdDate={comment.createdDate} />
 	<div>
 		{#if comment.member.id == userId}
 			<button class="edit">

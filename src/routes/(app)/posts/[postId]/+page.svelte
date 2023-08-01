@@ -38,7 +38,7 @@
 	};
 </script>
 
-<Description member={data.post.member} description={data.post.description} createdDate={data.post.createdDate} />
+<Description userId={data.user.id} member={data.post.member} description={data.post.description} createdDate={data.post.createdDate} />
 <div>
 	{#if data.post.memberId == data.user.id}
 		<button class="edit">
