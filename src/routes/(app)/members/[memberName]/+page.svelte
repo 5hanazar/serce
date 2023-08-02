@@ -53,7 +53,7 @@
     <button on:click={resetCookieAndRefresh}>Log out</button>
     {:else}
     <button on:click={() => follow()}>
-        {#if data.member.isFollowed}
+        {#if data.isFollowed}
             Unfollow
         {:else}
             Follow
