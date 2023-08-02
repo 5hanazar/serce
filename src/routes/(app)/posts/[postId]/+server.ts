@@ -40,7 +40,7 @@ export async function GET({ params, locals }) {
             postId: r.id,
         },
     });
-    r.comments = await Promise.all(
+    const comments = await Promise.all(
 		buf.map(async (r) => {
 			r.likeCount = await prisma.likeOfComment.count({
 				where: {
@@ -59,7 +59,7 @@ export async function GET({ params, locals }) {
 		})
 	);
 
-	return json({ post: r });
+	return json({ post: r, comments });
 }
 
 /** @type {import('./$types').RequestHandler} */

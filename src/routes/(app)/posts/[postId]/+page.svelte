@@ -77,7 +77,7 @@
     <input type="text" name="description" required>
     <button>Submit</button>
 </form>
-{#each data.post.comments as comment}
+{#each data.comments as comment}
     <Comment comment={comment} />
 {/each}
 

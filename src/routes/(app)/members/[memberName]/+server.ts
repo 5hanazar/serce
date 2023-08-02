@@ -30,5 +30,5 @@ export async function GET({ params, locals }) {
         isFollowed: isFollowed != null,
         isMine: member.id == user.id
     }
-    return json({ ...extra, member })
+    return json({ member, ...extra })
 }
