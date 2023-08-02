@@ -38,11 +38,11 @@
     </tr>
     <tr>
         <th>Follower Count:</th>
-        <td>{data.member.followerCount}</td>
+        <td>{data.followerCount}</td>
     </tr>
     <tr>
         <th>Following Count:</th>
-        <td>{data.member.followingCount}</td>
+        <td>{data.followingCount}</td>
     </tr>
     <tr>
         <th>Created Date:</th>
