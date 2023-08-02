@@ -4,7 +4,6 @@
 	import { invalidateAll } from "$app/navigation";
 	import LikeButton from "$lib/likeButton.svelte";
 	import Description from "$lib/description.svelte";
-	export let userId: number;
 	export let comment: import("@prisma/client").Comment & { member: Member };
 	const onLikeClick = async () => {
 		const response = await fetch("/comments", {
@@ -34,9 +33,9 @@
 </script>
 
 <article>
-    <Description userId={userId} member={comment.member} description={comment.description} createdDate={comment.createdDate} />
+    <Description isMine={comment.isMine} member={comment.member} description={comment.description} createdDate={comment.createdDate} />
 	<div>
-		{#if comment.member.id == userId}
+		{#if comment.isMine}
 			<button class="edit">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="none" stroke="currentColor" stroke-width="4" stroke-miterlimit="10" d="M23.9 21.8V30h-22V8.2h8.3"/><path fill="currentColor" d="M30 7.3a2 2 0 0 1-.7 1.5L14.7 23.4H8.5v-6.1L23.2 2.6a2 2 0 0 1 1.5-.6 2 2 0 0 1 1.6.7l3 3c.5.5.7 1 .7 1.6z"/></svg>
 				<small>Edit</small>

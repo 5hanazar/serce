@@ -24,7 +24,7 @@
 
 <h1>Home</h1>
 {#each data.posts as post}
-    <Post userId={data.user.id} post={post} />
+    <Post post={post} />
 {/each}
 
 <form on:submit={submit}>

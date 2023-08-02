@@ -26,5 +26,5 @@ export async function load({ params, locals }) {
         }
     })
     member.isFollowed = isFollowed != null
-    return { isOwner: member.id == user.id, member }
+    return { isMine: member.id == user.id, member }
 }

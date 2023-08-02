@@ -4,7 +4,6 @@ import type { Member } from "@prisma/client";
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params, locals }) {
 	const user: Member = locals.user;
-    
 	const r = await prisma.post.findFirstOrThrow({
 		include: {
 			member: true
@@ -40,6 +39,7 @@ export async function load({ params, locals }) {
                 }
             })
             r.isLiked = isLiked != null
+            r.isMine = r.memberId == user.id
 			return r;
 		})
 	);
@@ -51,6 +51,7 @@ export async function load({ params, locals }) {
         }
     })
     r.isLiked = isLiked != null
+    r.isMine = r.memberId == user.id
 
-	return { user, post: r };
+	return { post: r };
 }

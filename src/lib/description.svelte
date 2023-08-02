@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Member } from "@prisma/client";
 	import { formatTime } from "$lib/front";
-    export let userId: number
+    export let isMine: boolean
     export let member: Member
     export let description: string
     export let createdDate: number
@@ -9,7 +9,7 @@
 
 <div>
     <img src="" alt="" />
-    {#if member.id == userId}
+    {#if isMine}
         <b>{member.fullName}</b>
     {:else}
         <a href={`/members/${member.name}`}>{member.fullName}</a>

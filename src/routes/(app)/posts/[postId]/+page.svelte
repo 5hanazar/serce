@@ -50,9 +50,9 @@
 	};
 </script>
 
-<Description userId={data.user.id} member={data.post.member} description={data.post.description} createdDate={data.post.createdDate} />
+<Description isMine={data.post.isMine} member={data.post.member} description={data.post.description} createdDate={data.post.createdDate} />
 <div>
-	{#if data.post.memberId == data.user.id}
+	{#if data.post.isMine}
 		<button class="edit">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="none" stroke="currentColor" stroke-width="4" stroke-miterlimit="10" d="M23.9 21.8V30h-22V8.2h8.3" /><path fill="currentColor" d="M30 7.3a2 2 0 0 1-.7 1.5L14.7 23.4H8.5v-6.1L23.2 2.6a2 2 0 0 1 1.5-.6 2 2 0 0 1 1.6.7l3 3c.5.5.7 1 .7 1.6z" /></svg>
 			<small>Edit</small>
@@ -78,7 +78,7 @@
     <button>Submit</button>
 </form>
 {#each data.post.comments as comment}
-    <Comment userId={data.user.id} comment={comment} />
+    <Comment comment={comment} />
 {/each}
 
 <style>

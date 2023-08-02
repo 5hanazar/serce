@@ -21,7 +21,7 @@
 	};
 </script>
 <h2>
-    {#if data.isOwner}
+    {#if data.isMine}
         My Profile
     {:else}
         {data.member.fullName}
@@ -49,7 +49,7 @@
         <td>{formatTime(data.member.createdDate)}</td>
     </tr>
 </table>
-{#if data.isOwner}
+{#if data.isMine}
     <button on:click={resetCookieAndRefresh}>Log out</button>
     {:else}
     <button on:click={() => follow()}>
