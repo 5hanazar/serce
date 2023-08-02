@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { Member } from "@prisma/client";
-	import { formatGreek } from "$lib/front";
+	import { formatGreek, type vPost } from "$lib/front";
 	import { invalidateAll } from "$app/navigation";
 	import LikeButton from "$lib/likeButton.svelte";
 	import Description from "$lib/description.svelte";
-	export let post: import("@prisma/client").Post & { member: Member };
+	export let post: vPost;
 	const onLikeClick = async () => {
 		const response = await fetch("/posts", {
 			method: "PUT",

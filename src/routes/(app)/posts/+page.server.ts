@@ -1,3 +1,4 @@
+import type { vPost } from "$lib/front";
 import type { Member, Post } from "@prisma/client";
 import { error } from "@sveltejs/kit";
 
@@ -5,8 +6,8 @@ import { error } from "@sveltejs/kit";
 export async function load({ url, fetch }) {
     const res = await fetch(url.pathname)    
     if (res.ok) {
-        const posts: (Post & { member: Member })[] = await res.json()
-        return { posts }
+        const posts: vPost[] = await res.json()
+        return posts
     }
     throw error(res.status)
 }
