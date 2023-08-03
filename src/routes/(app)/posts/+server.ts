@@ -1,7 +1,41 @@
 import prisma, { getLocalTimestampInSeconds } from '$lib/back';
 import type { Member } from '@prisma/client';
+import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
+export async function GET({ locals }) {
+    const user: Member = locals.user;
+	const buf = await prisma.post.findMany({
+		include: {
+			member: true,
+		},
+	});
+	const posts = await Promise.all(
+		buf.map(async (r) => {
+			r.likeCount = await prisma.likeOfPost.count({
+				where: {
+					postId: r.id,
+				},
+			});
+            r.commentCount = await prisma.comment.count({
+				where: {
+					postId: r.id,
+				},
+			});
+            const isLiked = await prisma.likeOfPost.findFirst({
+                where: {
+                    memberId: user.id,
+                    postId: r.id
+                }
+            })
+            r.isLiked = isLiked != null
+            r.isMine = r.memberId == user.id
+			return r;
+		})
+	);
+	return json({ posts })
+}
+
 export async function POST({ request, locals }) {
     const user: Member = locals.user
     const data = await request.json();

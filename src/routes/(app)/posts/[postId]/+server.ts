@@ -1,10 +1,10 @@
 import prisma, { getLocalTimestampInSeconds } from "$lib/back";
 import type { Member } from "@prisma/client";
+import { json } from "@sveltejs/kit";
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ params, locals }) {
+/** @type {import('./$types').RequestHandler} */
+export async function GET({ params, locals }) {
 	const user: Member = locals.user;
-    
 	const r = await prisma.post.findFirstOrThrow({
 		include: {
 			member: true
@@ -18,6 +18,20 @@ export async function load({ params, locals }) {
             postId: r.id,
         },
     });
+    r.commentCount = await prisma.comment.count({
+        where: {
+            postId: r.id,
+        },
+    });
+    const isLiked = await prisma.likeOfPost.findFirst({
+        where: {
+            memberId: user.id,
+            postId: r.id
+        }
+    })
+    r.isLiked = isLiked != null
+    r.isMine = r.memberId == user.id
+
     const buf = await prisma.comment.findMany({
         include: {
             member: true
@@ -26,7 +40,7 @@ export async function load({ params, locals }) {
             postId: r.id,
         },
     });
-    r.comments = await Promise.all(
+    const comments = await Promise.all(
 		buf.map(async (r) => {
 			r.likeCount = await prisma.likeOfComment.count({
 				where: {
@@ -40,17 +54,25 @@ export async function load({ params, locals }) {
                 }
             })
             r.isLiked = isLiked != null
+            r.isMine = r.memberId == user.id
 			return r;
 		})
 	);
 
-    const isLiked = await prisma.likeOfPost.findFirst({
+	return json({ post: r, comments });
+}
+
+/** @type {import('./$types').RequestHandler} */
+export async function DELETE({ params, locals }) {
+    const user: Member = locals.user
+    params.postId = parseInt(params.postId)
+    await prisma.post.delete({
         where: {
-            memberId: user.id,
-            postId: r.id
+            id: params.postId,
+            memberId: user.id
         }
     })
-    r.isLiked = isLiked != null
-
-	return { user, post: r };
+	return new Response(null, {
+        status: 200
+    });
 }

@@ -1,3 +1,5 @@
+import type { Member, Post } from "@prisma/client";
+
 export const formatTime = (time: number): string => {
     const today = new Date(time * 1000);
     const yyyy = today.getUTCFullYear();
@@ -75,3 +77,4 @@ export function enhance(form: HTMLFormElement) {
 		},
 	};
 }
+export type vPost = Post & { member: Member, likeCount: number, commentCount: number, isLiked: boolean, isMine: boolean }

@@ -38,7 +38,8 @@ export async function handle({ event, resolve }) {
             }
             else return new Response('Redirect', {status: 303, headers: { Location: '/login' }});
         }
-    }   
+    }
+    if (p == '/') return new Response('Redirect', {status: 303, headers: { Location: '/posts' }});
 	const response = await resolve(event);
 	return response;
 }
