@@ -1,4 +1,4 @@
-import prisma, { getLocalTimestampInSeconds } from "$lib/back";
+import prisma, { formatTime, getRelativeTime } from "$lib/back";
 import type { Member } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
@@ -10,6 +10,8 @@ export async function GET({ params, locals }) {
             name: params.memberName
         }
     })
+    member.lastOnline = getRelativeTime(member.lastOnline)
+    member.createdDate = formatTime(member.createdDate)
     const isFollowed = await prisma.follow.findFirst({
         where: {
             memberId: member.id,

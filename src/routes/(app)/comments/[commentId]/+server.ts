@@ -1,4 +1,4 @@
-import prisma, { getLocalTimestampInSeconds } from "$lib/back";
+import prisma from "$lib/back";
 import type { Member } from "@prisma/client";
 
 /** @type {import('./$types').RequestHandler} */

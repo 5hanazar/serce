@@ -2,7 +2,7 @@
 	import { goto, invalidateAll } from "$app/navigation";
 	import Comment from "$lib/comment.svelte";
 	import Description from "$lib/description.svelte";
-	import { clearForm, formToObj, formatGreek, formatTime } from "$lib/front";
+	import { clearForm, formToObj, formatGreek } from "$lib/front";
 	import LikeButton from "$lib/likeButton.svelte";
 	export let data;
 
@@ -50,7 +50,7 @@
 	};
 </script>
 
-<Description isMine={data.post.isMine} member={data.post.member} description={data.post.description} createdDate={data.post.createdDate} />
+<Description isMine={data.post.isMine} member={data.post.member} description={data.post.description} createdDateRelative={data.post.createdDateRelative} />
 <div>
 	{#if data.post.isMine}
 		<button class="edit">

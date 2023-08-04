@@ -1,33 +1,5 @@
 import type { Member, Post } from "@prisma/client";
 
-export const formatTime = (time: number): string => {
-    const today = new Date(time * 1000);
-    const yyyy = today.getUTCFullYear();
-    const mm = today.getUTCMonth() + 1;
-    const dd = today.getUTCDate();
-    const hh = today.getUTCHours();
-    const m = today.getUTCMinutes();
-
-    let smm = mm.toString();
-    let sdd = dd.toString();
-    let shh = hh.toString();
-    let sm = m.toString();
-
-    if (mm < 10) smm = "0" + mm;
-    if (dd < 10) sdd = "0" + dd;
-    if (hh < 10) shh = "0" + hh;
-    if (m < 10) sm = "0" + m;
-    return sdd + "." + smm + "." + yyyy + " " + shh + ":" + sm;
-}
-export const formToObj = (e: any) => {
-    const data = Object.fromEntries(new FormData(e.target).entries());
-	return data
-}
-export const clearForm = (e: any) => {
-    Array.from(e.target.elements).forEach((input: any) => {
-        if (input.tagName == 'INPUT') input.value = ""
-    });
-}
 const COUNT_FORMATS =
 [
   { // 0 - 999
@@ -57,6 +29,15 @@ export const formatGreek = (value: number) => {
     value = Math.floor(value * 10) / 10; // keep one decimal number, only if needed
     return (value + format!.letter);
 }
+export const formToObj = (e: any) => {
+    const data = Object.fromEntries(new FormData(e.target).entries());
+	return data
+}
+export const clearForm = (e: any) => {
+    Array.from(e.target.elements).forEach((input: any) => {
+        if (input.tagName == 'INPUT') input.value = ""
+    });
+}
 export function enhance(form: HTMLFormElement) {
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -77,4 +58,7 @@ export function enhance(form: HTMLFormElement) {
 		},
 	};
 }
-export type vPost = Post & { member: Member, likeCount: number, commentCount: number, isLiked: boolean, isMine: boolean }
+//export type vPost = Post & { createdDate: string, member: Member, likeCount: number, commentCount: number, isLiked: boolean, isMine: boolean }
+export interface vPost extends Omit<Post, 'createdDate'> {
+    createdDate: string, createdDateRelative: string, member: Member, likeCount: number, commentCount: number, isLiked: boolean, isMine: boolean
+}

@@ -1,4 +1,4 @@
-import prisma, { getLocalTimestampInSeconds } from '$lib/back';
+import prisma, { formatTime, getLocalTimestampInSeconds, getRelativeTime } from '$lib/back';
 import type { Member } from '@prisma/client';
 import { json } from '@sveltejs/kit';
 
@@ -12,6 +12,10 @@ export async function GET({ locals }) {
 	});
 	const posts = await Promise.all(
 		buf.map(async (r) => {
+            r.member.lastOnline = getRelativeTime(r.member.lastOnline)
+            r.member.createdDate = formatTime(r.member.createdDate)
+            r.createdDateRelative = getRelativeTime(r.createdDate)
+            r.createdDate = formatTime(r.createdDate)
 			r.likeCount = await prisma.likeOfPost.count({
 				where: {
 					postId: r.id,

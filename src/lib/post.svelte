@@ -32,7 +32,7 @@
 </script>
 
 <article>
-    <Description isMine={post.isMine} member={post.member} description={post.description} createdDate={post.createdDate} />
+    <Description isMine={post.isMine} member={post.member} description={post.description} createdDateRelative={post.createdDateRelative} />
 	<div>
 		{#if post.isMine}
 			<button class="edit">

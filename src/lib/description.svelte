@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type { Member } from "@prisma/client";
-	import { formatTime } from "$lib/front";
     export let isMine: boolean
     export let member: Member
     export let description: string
-    export let createdDate: number
+    export let createdDateRelative: string
 </script>
 
 <div>
@@ -14,7 +13,7 @@
     {:else}
         <a href={`/members/${member.name}`}>{member.fullName}</a>
     {/if}
-    <small>{formatTime(createdDate)}</small>
+    <small>{createdDateRelative}</small>
 </div>
 <p>
     {description}

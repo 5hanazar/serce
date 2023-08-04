@@ -1,6 +1,5 @@
 <script>
 	import { invalidateAll } from "$app/navigation";
-	import { formatTime } from "$lib/front";
     export let data
 	const resetCookieAndRefresh = async () => {
 		document.cookie = `user=`;
@@ -45,8 +44,12 @@
         <td>{data.followingCount}</td>
     </tr>
     <tr>
+        <th>Last Online:</th>
+        <td>{data.member.lastOnline}</td>
+    </tr>
+    <tr>
         <th>Created Date:</th>
-        <td>{formatTime(data.member.createdDate)}</td>
+        <td>{data.member.createdDate}</td>
     </tr>
 </table>
 {#if data.isMine}
