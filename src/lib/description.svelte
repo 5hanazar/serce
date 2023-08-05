@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from "$app/paths";
 	import type { Member } from "@prisma/client";
     export let isMine: boolean
     export let member: Member
@@ -11,7 +12,7 @@
     {#if isMine}
         <b>{member.fullName}</b>
     {:else}
-        <a href={`/members/${member.name}`}>{member.fullName}</a>
+        <a href={`${base}/members/${member.name}`}>{member.fullName}</a>
     {/if}
     <small>{createdDateRelative}</small>
 </div>

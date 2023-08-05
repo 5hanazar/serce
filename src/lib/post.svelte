@@ -3,9 +3,10 @@
 	import { invalidateAll } from "$app/navigation";
 	import LikeButton from "$lib/likeButton.svelte";
 	import Description from "$lib/description.svelte";
+	import { base } from "$app/paths";
 	export let post: vPost;
 	const onLikeClick = async () => {
-		const response = await fetch("/posts", {
+		const response = await fetch(`${base}/posts`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -18,7 +19,7 @@
 		}
 	};
     const onDeleteClick = async () => {
-		const response = await fetch(`/posts/${post.id}`, {
+		const response = await fetch(`${base}/posts/${post.id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -44,7 +45,7 @@
                 <small>Delete</small>
             </button>
 		{/if}
-		<a href={`/posts/${post.id}`}>
+		<a href={`${base}/posts/${post.id}`}>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><path d="M5.2 23A5 5 0 0 1 0 18V6C0 3.1 2.3.8 5.2.8h21.6C29.7.8 32 3.1 32 6v12a5 5 0 0 1-5.2 5H18l-8.4 7.8a2 2 0 0 1-3.2-1.6V23H5.2z" /></svg>
         </a>
         {#if post.commentCount > 0}

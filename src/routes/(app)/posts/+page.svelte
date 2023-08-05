@@ -2,11 +2,12 @@
 	import { invalidateAll } from '$app/navigation';
 	import Post from '$lib/post.svelte';
 	import { clearForm, formToObj } from '$lib/front';
+	import { base } from '$app/paths';
 	export let data;
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
-		const response = await fetch('/posts', {
+		const response = await fetch(`${base}/posts`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

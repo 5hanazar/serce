@@ -8,7 +8,8 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({ out: 'adminweb' }),
+        paths: {base: '/serce'}
 	}
 };
 

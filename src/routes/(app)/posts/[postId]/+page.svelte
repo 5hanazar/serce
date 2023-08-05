@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto, invalidateAll } from "$app/navigation";
+	import { base } from "$app/paths";
 	import Comment from "$lib/comment.svelte";
 	import Description from "$lib/description.svelte";
 	import { clearForm, formToObj, formatGreek } from "$lib/front";
@@ -7,7 +8,7 @@
 	export let data;
 
 	const onLikeClick = async () => {
-		const response = await fetch("/posts", {
+		const response = await fetch(`${base}/posts`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -20,7 +21,7 @@
 		}
 	};
     const onDeleteClick = async () => {
-		const response = await fetch(`/posts/${data.post.id}`, {
+		const response = await fetch(`${base}/posts/${data.post.id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -28,13 +29,13 @@
 			}
 		});
 		if (response.ok) {
-			await goto(`/posts`, { replaceState: true });
+			await goto(`${base}/posts`, { replaceState: true });
 		}
 	};
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
-		const response = await fetch('/comments', {
+		const response = await fetch(`${base}/comments`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

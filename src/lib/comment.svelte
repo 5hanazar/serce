@@ -4,9 +4,10 @@
 	import { invalidateAll } from "$app/navigation";
 	import LikeButton from "$lib/likeButton.svelte";
 	import Description from "$lib/description.svelte";
+	import { base } from "$app/paths";
 	export let comment: import("@prisma/client").Comment & { member: Member };
 	const onLikeClick = async () => {
-		const response = await fetch("/comments", {
+		const response = await fetch(`${base}/comments`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -19,7 +20,7 @@
 		}
 	};
     const onDeleteClick = async () => {
-		const response = await fetch(`/comments/${comment.id}`, {
+		const response = await fetch(`${base}/comments/${comment.id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",

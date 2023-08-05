@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import { clearForm, formToObj } from "$lib/front";
     let status = " ";
 	const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const data = formToObj(e)        
-		const response = await fetch("/login", {
+		const response = await fetch(`${base}/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -13,7 +14,7 @@
 			},
 			body: JSON.stringify({ name: data.name, password: data.password }),
 		});
-		if (response.ok) await goto(`/posts`, { replaceState: true });
+		if (response.ok) await goto(`${base}/posts`, { replaceState: true });
 		else if (response.status == 401) {
 			status = "Invalid credentials";
             clearForm(e)

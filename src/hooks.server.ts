@@ -2,23 +2,24 @@ import * as cookie from "cookie";
 import jwt from "jsonwebtoken";
 import prisma, { getLocalTimestampInSeconds } from "$lib/back";
 import { PRIVATE_KEY } from '$env/static/private'
+import { base } from "$app/paths";
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
     const myCookie = cookie.parse(event.request.headers.get("cookie") || "");
 	const user = await decrypt(myCookie.user);
     const p = event.url.pathname;
-    if (p == '/login') {
+    if (p == `${base}/login`) {
         if (user != null) {
             const buf = await prisma.member.findUnique({
                 where: {
                     name: user.name
                 },
             });
-            if (buf != null && buf.password == user.password) return new Response('Redirect', {status: 303, headers: { Location: '/' }});
+            if (buf != null && buf.password == user.password) return new Response('Redirect', {status: 303, headers: { Location: `${base}/posts` }});
         }
     } else {
-        if (user == null) return new Response('Redirect', {status: 303, headers: { Location: '/login' }});
+        if (user == null) return new Response('Redirect', {status: 303, headers: { Location: `${base}/login` }});
         else {
             const buf = await prisma.member.findUnique({
                 where: {
@@ -36,10 +37,10 @@ export async function handle({ event, resolve }) {
                 })
                 event.locals.user = buf
             }
-            else return new Response('Redirect', {status: 303, headers: { Location: '/login' }});
+            else return new Response('Redirect', {status: 303, headers: { Location: `${base}/login` }});
         }
     }
-    if (p == '/') return new Response('Redirect', {status: 303, headers: { Location: '/posts' }});
+    if (p == '/') return new Response('Redirect', {status: 303, headers: { Location: `${base}/posts` }});
 	const response = await resolve(event);
 	return response;
 }

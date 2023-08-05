@@ -1,12 +1,13 @@
 <script>
 	import { invalidateAll } from "$app/navigation";
+	import { base } from "$app/paths";
     export let data
 	const resetCookieAndRefresh = async () => {
 		document.cookie = `user=`;
 		await invalidateAll();
 	};
     const follow = async () => {
-		const response = await fetch("/members", {
+		const response = await fetch(`${base}/members`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
