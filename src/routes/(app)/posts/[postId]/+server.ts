@@ -35,39 +35,7 @@ export async function GET({ params, locals }) {
     })
     r.isLiked = isLiked != null
     r.isMine = r.memberId == user.id
-
-    const buf = await prisma.comment.findMany({
-        include: {
-            member: true
-        },
-        where: {
-            postId: r.id,
-        },
-    });
-    const comments = await Promise.all(
-		buf.map(async (r) => {
-            r.member.lastOnline = getRelativeTime(r.member.lastOnline)
-            r.member.createdDate = formatTime(r.member.createdDate)
-            r.createdDateRelative = getRelativeTime(r.createdDate)
-            r.createdDate = formatTime(r.createdDate)
-			r.likeCount = await prisma.likeOfComment.count({
-				where: {
-					commentId: r.id,
-				},
-			});
-            const isLiked = await prisma.likeOfComment.findFirst({
-                where: {
-                    memberId: user.id,
-                    commentId: r.id
-                }
-            })
-            r.isLiked = isLiked != null
-            r.isMine = r.memberId == user.id
-			return r;
-		})
-	);
-
-	return json({ post: r, comments });
+	return json({ post: r });
 }
 
 /** @type {import('./$types').RequestHandler} */

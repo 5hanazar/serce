@@ -12,7 +12,7 @@ export async function POST({ request }) {
     })
     if (!(buf != null && buf.password == user.password)) return new Response(null, { status: 401 });
     const token = jwt.sign(JSON.stringify(user), PRIVATE_KEY)
-	return new Response(null, {
+	return new Response(token, {
         headers: {
             'Set-Cookie': `user=${token};path=/;SameSite=None;Secure`
         },

@@ -3,12 +3,26 @@ import type { Member } from '@prisma/client';
 import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ locals }) {
+export async function GET({ url, locals }) {
     const user: Member = locals.user;
+    const query = parseInt(url.searchParams.get('memberId') || '-1')
+    let where = undefined
+    if (query >= 0) {
+        if (query == 0) where = {
+            memberId: user.id
+        }; else where = {
+            memberId: query
+        }
+    }
+    //await new Promise(resolve => setTimeout(resolve, 2000));
 	const buf = await prisma.post.findMany({
 		include: {
 			member: true,
 		},
+        where,
+        orderBy: {
+            createdDate: 'desc'
+        }
 	});
 	const posts = await Promise.all(
 		buf.map(async (r) => {
@@ -48,7 +62,7 @@ export async function POST({ request, locals }) {
         data: {
             active: true,
             memberId: user.id,
-            description: data.description,
+            description: data.description.trim(),
             lastUpdate: now,
             createdDate: now
         }

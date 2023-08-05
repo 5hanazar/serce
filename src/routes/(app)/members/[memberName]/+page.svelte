@@ -36,6 +36,10 @@
         <td>{data.member.fullName}</td>
     </tr>
     <tr>
+        <th>Post Count:</th>
+        <td>{data.postCount}</td>
+    </tr>
+    <tr>
         <th>Follower Count:</th>
         <td>{data.followerCount}</td>
     </tr>

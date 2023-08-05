@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
 	import { clearForm, formToObj } from "$lib/front";
     let status = " ";
 	const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const data = formToObj(e)        
-		const response = await fetch($page.url.pathname, {
+		const response = await fetch("/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

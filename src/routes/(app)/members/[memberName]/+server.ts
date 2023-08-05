@@ -5,6 +5,10 @@ import { json } from "@sveltejs/kit";
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params, locals }) {
     const user: Member = locals.user
+    if (params.memberName == 'me') {
+        params.memberName = user.name
+    }
+    //await new Promise(resolve => setTimeout(resolve, 2000));
     const member = await prisma.member.findUniqueOrThrow({
         where: {
             name: params.memberName
@@ -19,6 +23,11 @@ export async function GET({ params, locals }) {
         }
     })
     const extra = {
+        postCount: await prisma.post.count({
+            where: {
+                memberId: member.id
+            }
+        }),
         followerCount: await prisma.follow.count({
             where: {
                 memberId: member.id
