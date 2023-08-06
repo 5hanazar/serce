@@ -40,7 +40,7 @@ export async function handle({ event, resolve }) {
             else return new Response('Redirect', {status: 303, headers: { Location: `${base}/login` }});
         }
     }
-    if (p == '/') return new Response('Redirect', {status: 303, headers: { Location: `${base}/posts` }});
+    if (p == `${base}`) return new Response('Redirect', {status: 303, headers: { Location: `${base}/posts` }});
 	const response = await resolve(event);
 	return response;
 }
