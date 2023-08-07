@@ -20,6 +20,7 @@ model Member {
     phone         String
     address       String
     description   String
+    files         String
     lastOnline    Int
     createdDate   Int
     posts         Post[]
@@ -36,6 +37,7 @@ model Post {
     memberId    Int
     member      Member       @relation(fields: [memberId], references: [id])
     description String
+    files       String
     lastUpdate  Int
     createdDate Int
     likes       LikeOfPost[]
@@ -60,6 +62,7 @@ model Comment {
     postId      Int
     parentId    Int
     description String
+    files       String
     lastUpdate  Int
     createdDate Int
     likes       LikeOfComment[]

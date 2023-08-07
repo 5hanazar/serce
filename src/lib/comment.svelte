@@ -34,7 +34,7 @@
 </script>
 
 <article>
-    <Description isMine={comment.isMine} member={comment.member} description={comment.description} createdDateRelative={comment.createdDateRelative} />
+    <Description isMine={comment.isMine} member={comment.member} description={comment.description} files={comment.files} createdDateRelative={comment.createdDateRelative} />
 	<div>
 		{#if comment.isMine}
 			<button class="edit">

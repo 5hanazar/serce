@@ -1,4 +1,4 @@
-import prisma, { formatTime, getLocalTimestampInSeconds, getRelativeTime } from "$lib/back";
+import prisma, { MY_PATH, formatTime, getLocalTimestampInSeconds, getRelativeTime } from "$lib/back";
 import type { Member } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
@@ -43,20 +43,48 @@ export async function GET({ url, locals }) {
 	return json({ comments })
 }
 
+import fs from "fs";
 export async function POST({ request, locals }) {
     const user: Member = locals.user
-    const data = await request.json();
+
+    const input = Object.fromEntries(await request.formData());
+	const data = await JSON.parse(input.data);
+
     const now = getLocalTimestampInSeconds()
-    await prisma.comment.create({
+    const comment = await prisma.comment.create({
         data: {
             memberId: user.id,
             postId: data.postId,
             parentId: 0,
             description: data.description.trim(),
+            files: "",
             lastUpdate: now,
             createdDate: now
         }
     })
+
+    let fls = "";
+	for await (const key of Object.keys(input)) {
+		if (key.startsWith("image")) {
+			const f = input[key] as File;
+			const buffer = await f.arrayBuffer();
+			const nm = `c${comment.id}_${parseInt(key.substring(5))}.${f.name.split(".").pop()}`;
+			fs.writeFileSync(`${MY_PATH}/${nm}`, new DataView(buffer));
+			fls += `${nm};`;
+		}
+	}
+	if (fls.length > 0) {
+		fls = fls.slice(0, -1);
+		await prisma.comment.update({
+			data: {
+				files: fls,
+			},
+			where: {
+				id: comment.id,
+			},
+		});
+	}
+
 	return new Response(null, {
         status: 200
     });

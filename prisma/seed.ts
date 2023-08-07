@@ -21,6 +21,7 @@ async function main() {
 			phone: "",
 			address: "",
 			description: "",
+            files: "",
 			createdDate: now,
             lastOnline: now
 		},
@@ -30,6 +31,7 @@ async function main() {
 			active: true,
 			memberId: john.id,
 			description: "Today is cold",
+            files: "",
             lastUpdate: now,
 			createdDate: now
 		},
@@ -43,6 +45,7 @@ async function main() {
 			phone: "",
 			address: "",
 			description: "",
+            files: "",
 			createdDate: now,
             lastOnline: now
 		},
@@ -52,6 +55,7 @@ async function main() {
 			active: true,
 			memberId: bond.id,
 			description: "Today is warm",
+            files: "",
             lastUpdate: now,
 			createdDate: now
 		},
@@ -78,6 +82,7 @@ async function main() {
             postId: bondPost.id,
             parentId: 0,
             description: 'Nice',
+            files: "",
             lastUpdate: now,
             createdDate: now
         }

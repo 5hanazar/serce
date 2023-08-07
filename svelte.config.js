@@ -9,7 +9,10 @@ const config = {
 
 	kit: {
 		adapter: adapter({ out: 'adminweb' }),
-        paths: {base: '/serce'}
+        paths: {base: '/serce'},
+        csrf: {
+            checkOrigin: false,
+        }
 	}
 };
 

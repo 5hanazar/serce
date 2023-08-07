@@ -47,3 +47,4 @@ export const getRelativeTime = (timestamp: number): string => {
 
     return 'just now';
   }
+  export const MY_PATH = "C:/Users/User/Documents/shapro/svkit/serce/static/files"

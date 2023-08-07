@@ -4,16 +4,18 @@
 	import { clearForm, formToObj } from '$lib/front';
 	import { base } from '$app/paths';
 	export let data;
+    
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
+        const formData = new FormData();
+		formData.append("data", JSON.stringify({ description: form.description }));
 		const response = await fetch(`${base}/posts`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ description: form.description }),
+			body: formData,
 		});
 		if (response.ok) {
             clearForm(e)

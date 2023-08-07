@@ -35,13 +35,14 @@
     const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
         const form = formToObj(e)
+        const formData = new FormData();
+		formData.append("data", JSON.stringify({ postId: data.post.id, description: form.description }));
 		const response = await fetch(`${base}/comments`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ postId: data.post.id, description: form.description }),
+			body: formData
 		});
 		if (response.ok) {
             clearForm(e)
@@ -51,7 +52,7 @@
 	};
 </script>
 
-<Description isMine={data.post.isMine} member={data.post.member} description={data.post.description} createdDateRelative={data.post.createdDateRelative} />
+<Description isMine={data.post.isMine} member={data.post.member} description={data.post.description} files={data.post.files} createdDateRelative={data.post.createdDateRelative} />
 <div>
 	{#if data.post.isMine}
 		<button class="edit">
@@ -72,7 +73,7 @@
 		<small>{formatGreek(data.post.likeCount)}</small>
 	{/if}
 </div>
-<h3>Comments</h3>
+<h2>Comments</h2>
 
 <form on:submit={submit}>
     <input type="text" name="description" required>
@@ -112,7 +113,7 @@
 	.edit {
 		margin: 0;
 	}
-    h3 {
+    h2 {
         margin-top: 2rem;
     }
 </style>
