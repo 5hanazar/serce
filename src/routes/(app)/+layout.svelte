@@ -5,7 +5,7 @@
 
 <header>
 	<div>
-		<img src="/favicon.png" alt="" />
+		<img src={`${base}/favicon.png`} alt="" />
         <a href={`${base}/posts`}><h1>Serçe</h1></a>
 		<a href={`${base}/members/${data.user.name}`}>
             <h3>{data.user.name}</h3>

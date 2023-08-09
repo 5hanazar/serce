@@ -14,6 +14,7 @@ datasource db {
 model Member {
     id            Int             @id @default(autoincrement())
     active        Boolean
+    verified      Boolean         @default(false)
     name          String          @unique
     password      String
     fullName      String

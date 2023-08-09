@@ -1,4 +1,4 @@
-import prisma, { MY_PATH, formatTime, getLocalTimestampInSeconds, getRelativeTime } from "$lib/back";
+import prisma, { FFMPEG, FFPROBE, MY, MY_PATH, formatTime, getLocalTimestampInSeconds, getRelativeTime } from "$lib/back";
 import type { Member } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
@@ -81,8 +81,14 @@ export async function POST({ request, locals }) {
 		if (key.startsWith("image")) {
 			const f = input[key] as File;
 			const buffer = await f.arrayBuffer();
-			const nm = `p${post.id}_${parseInt(key.substring(5))}.${f.name.split(".").pop()}`;
+            const _nm = `p${post.id}_${parseInt(key.substring(5))}`
+			const nm = `${_nm}.${f.name.split(".").pop()}`;
 			fs.writeFileSync(`${MY_PATH}/${nm}`, new DataView(buffer));
+            if (nm.endsWith('.mp4')) {
+                await shell(`${FFMPEG} -i ${MY_PATH}/${nm} -vframes 1 ${MY_PATH}/${_nm}.jpg`)
+                const w = parseInt(await shell(`${FFPROBE} -v error -select_streams v:0 -show_entries stream=width -of csv=p=0:s=x ${MY_PATH}/${_nm}.jpg`))
+                await shell(`${FFMPEG} -y -i ${MY_PATH}/${_nm}.jpg -i ${MY}/vid.png -filter_complex "[1:v]scale=${w * 0.2}:-1[watermark]; [0:v][watermark]overlay=W-w-${w * 0.05}:${w * 0.05}:format=auto" ${MY_PATH}/${_nm}.jpg`)
+            }
 			fls += `${nm};`;
 		}
 	}
@@ -102,6 +108,21 @@ export async function POST({ request, locals }) {
 		status: 200,
 	});
 }
+
+import { exec } from "child_process";
+const shell = (cmd: string) => new Promise<any>((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+            //console.error(`EXEC error: ${error}`);
+            reject(error)
+        } else if (stderr) {
+            //console.error(`EXEC stderr: ${stderr}`);
+            resolve(null)
+        } else {
+            resolve(stdout)
+        }
+    });
+});
 
 export async function PUT({ request, locals }) {
 	const user: Member = locals.user;

@@ -12,6 +12,20 @@ async function main() {
     await prisma.comment.deleteMany()
     await prisma.post.deleteMany()
     await prisma.member.deleteMany()
+    await prisma.member.create({
+		data: {
+			active: true,
+			name: "sha",
+			password: "890",
+			fullName: "Shanazar",
+			phone: "",
+			address: "",
+			description: "",
+            files: "",
+			createdDate: now,
+            lastOnline: now
+		},
+	});
 	const john = await prisma.member.create({
 		data: {
 			active: true,

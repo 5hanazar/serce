@@ -24,14 +24,15 @@
 {#if files}
 <article>
     {#each files.split(";") as src}
-	    {#if src.endsWith(".mp4")}
+	    <!-- {#if src.endsWith(".mp4")}
 		<video controls>
 			<source src={`/files/${src}`} type="video/mp4" />
 			<track kind="captions" />
 		</video>
         {:else}
         <img src={`/files/${src}`} alt="" />
-	    {/if}
+	    {/if} -->
+        <img src={`${base}/files/${src.replace('.mp4', '.jpg')}`} alt="" />
     {/each}
 </article>
 {/if}
