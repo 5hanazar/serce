@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { invalidateAll } from "$app/navigation";
 	import { base } from "$app/paths";
     export let data
@@ -30,7 +30,7 @@
 <table>
     <tr>
         <th>Name:</th>
-        <td>{data.member.name}</td>
+        <td>{data.member.nickname}</td>
     </tr>
     <tr>
         <th>Fullname:</th>

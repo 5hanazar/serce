@@ -15,7 +15,7 @@ async function main() {
     await prisma.member.create({
 		data: {
 			active: true,
-			name: "sha",
+			nickname: "sha",
 			password: "890",
 			fullName: "Shanazar",
 			phone: "",
@@ -29,7 +29,7 @@ async function main() {
 	const john = await prisma.member.create({
 		data: {
 			active: true,
-			name: "john",
+			nickname: "john",
 			password: "123",
 			fullName: "John Wick",
 			phone: "",
@@ -53,7 +53,7 @@ async function main() {
     const bond = await prisma.member.create({
 		data: {
 			active: true,
-			name: "bond",
+			nickname: "bond",
 			password: "007",
 			fullName: "James Bond",
 			phone: "",
@@ -74,7 +74,7 @@ async function main() {
 			createdDate: now
 		},
 	});
-    console.log(`${john.name} | ${john.password}\n${bond.name} | ${bond.password}`);
+    console.log(`${john.nickname} | ${john.password}\n${bond.nickname} | ${bond.password}`);
 
     await prisma.likeOfPost.create({
         data: {

@@ -15,7 +15,7 @@ model Member {
     id            Int             @id @default(autoincrement())
     active        Boolean
     verified      Boolean         @default(false)
-    name          String          @unique
+    nickname      String          @unique
     password      String
     fullName      String
     phone         String
