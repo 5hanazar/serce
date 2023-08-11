@@ -11,7 +11,7 @@ export async function GET({ params, locals }) {
     //await new Promise(resolve => setTimeout(resolve, 2000));
     const member = await prisma.member.findUniqueOrThrow({
         where: {
-            name: params.memberName
+            nickname: params.memberName
         }
     })
     member.lastOnline = getRelativeTime(member.lastOnline)

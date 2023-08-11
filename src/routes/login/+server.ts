@@ -7,7 +7,7 @@ export async function POST({ request }) {
     const user = await request.json();
     const buf = await prisma.member.findUnique({
         where: {
-            name: user.name
+            nickname: user.name
         }
     })
     if (!(buf != null && buf.password == user.password)) return new Response(null, { status: 401 });

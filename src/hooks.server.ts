@@ -13,7 +13,7 @@ export async function handle({ event, resolve }) {
         if (user != null) {
             const buf = await prisma.member.findUnique({
                 where: {
-                    name: user.name
+                    nickname: user.name
                 },
             });
             if (buf != null && buf.password == user.password) return new Response('Redirect', {status: 303, headers: { Location: `${base}/posts` }});
@@ -23,7 +23,7 @@ export async function handle({ event, resolve }) {
         else {
             const buf = await prisma.member.findUnique({
                 where: {
-                    name: user.name
+                    nickname: user.name
                 },
             });
             if (buf != null && buf.password == user.password) {

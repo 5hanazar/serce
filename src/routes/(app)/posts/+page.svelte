@@ -34,3 +34,15 @@
     <input type="text" name="description" required>
     <button>Submit</button>
 </form>
+
+<style>
+	form {
+		background-color: red;
+		display: flex;
+	}
+	input {
+		flex: 1;
+		padding: .5rem;
+		font-size: 1.2rem;
+	}
+</style>
