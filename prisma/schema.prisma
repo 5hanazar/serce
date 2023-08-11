@@ -13,7 +13,7 @@ datasource db {
 
 model Member {
     id            Int             @id @default(autoincrement())
-    active        Boolean
+    active        Boolean         @unique
     verified      Boolean         @default(false)
     nickname      String          @unique
     password      String
@@ -30,19 +30,22 @@ model Member {
     likedComments LikeOfComment[]
     following     Follow[]        @relation("following")
     followers     Follow[]        @relation("follower")
+    memberId      PrivateRoom[]   @relation("memberId")
+    activeState   PrivateRoom[]   @relation("activeState")
 }
 
 model Post {
-    id          Int          @id @default(autoincrement())
+    id          Int           @id @default(autoincrement())
     active      Boolean
     memberId    Int
-    member      Member       @relation(fields: [memberId], references: [id])
+    member      Member        @relation(fields: [memberId], references: [id])
     description String
     files       String
     lastUpdate  Int
     createdDate Int
     likes       LikeOfPost[]
     comments    Comment[]
+    privateRoom PrivateRoom[]
 }
 
 model LikeOfPost {
@@ -87,4 +90,14 @@ model Follow {
     createdDate Int
 
     @@id([memberId, followerId])
+}
+
+model PrivateRoom {
+    id          Int     @id @default(autoincrement())
+    member      Member  @relation(fields: [memberId], references: [id], name: "memberId")
+    active      Member  @relation(fields: [activeState], references: [active], name: "activeState")
+    post        Post    @relation(fields: [postId], references: [id])
+    memberId    Int
+    postId      Int
+    activeState Boolean
 }
