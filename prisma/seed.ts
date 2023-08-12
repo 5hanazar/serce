@@ -12,6 +12,7 @@ async function main() {
     await prisma.comment.deleteMany()
     await prisma.post.deleteMany()
     await prisma.member.deleteMany()
+
     await prisma.member.create({
         data: {
             active: true,
@@ -40,17 +41,7 @@ async function main() {
             lastOnline: now
         },
     });
-    // const johnAndBondPrivateRoom = await prisma.PrivateRoom
-    const johnPost = await prisma.post.create({
-        data: {
-            active: true,
-            memberId: john.id,
-            description: "Today is cold",
-            files: "",
-            lastUpdate: now,
-            createdDate: now
-        },
-    });
+
     const bond = await prisma.member.create({
         data: {
             active: true,
@@ -65,6 +56,21 @@ async function main() {
             lastOnline: now
         },
     });
+    const chatfor2 = await prisma.chat.create({
+        data: {
+            name: "firstChat",
+            chatnick: "JB"
+        },
+    })
+    const bondMessage = await prisma.message.create({
+        data: {
+            content: "Hello!",
+            createdAt: now,
+            authorId: bond.id,
+            chatId: chatfor2.id
+        }
+    })
+
     const bondPost = await prisma.post.create({
         data: {
             active: true,
@@ -84,13 +90,6 @@ async function main() {
             createdDate: now
         }
     })
-    await prisma.likeOfPost.create({
-        data: {
-            memberId: bond.id,
-            postId: johnPost.id,
-            createdDate: now
-        }
-    })
     const johnComment = await prisma.comment.create({
         data: {
             memberId: john.id,
@@ -102,6 +101,8 @@ async function main() {
             createdDate: now
         }
     })
+
+
     await prisma.likeOfComment.create({
         data: {
             memberId: bond.id,
@@ -116,6 +117,25 @@ async function main() {
             createdDate: now
         }
     })
+
+    const johnPost = await prisma.post.create({
+        data: {
+            active: true,
+            memberId: john.id,
+            description: "Today is cold",
+            files: "",
+            lastUpdate: now,
+            createdDate: now
+        },
+    });
+    await prisma.likeOfPost.create({
+        data: {
+            memberId: bond.id,
+            postId: johnPost.id,
+            createdDate: now
+        }
+    })
+
 }
 
 main()
