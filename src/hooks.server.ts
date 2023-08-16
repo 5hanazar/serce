@@ -27,6 +27,7 @@ export async function handle({ event, resolve }) {
                 },
             });
             if (buf != null && buf.password == user.password) {
+                event.locals.last = buf.lastOnline
                 await prisma.member.update({
                     data: {
                         lastOnline: getLocalTimestampInSeconds()

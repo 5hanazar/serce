@@ -13,7 +13,7 @@
 	{#if isMine}
 		<b>{member.fullName}</b>
 	{:else}
-		<a href={`${base}/members/${member.name}`}>{member.fullName}</a>
+		<a href={`${base}/members/${member.nickname}`}>{member.fullName}</a>
 	{/if}
 	<small>{createdDateRelative}</small>
 </div>
