@@ -53,7 +53,7 @@ export const getRelativeTime = (timestamp: number): string => {
 //export const FFPROBE = `sudo ffprobe`;
 
 export const MY = "C:/Users/User/Documents/shapro/svkit/serce/static"
-export const FFMPEG = `C:/ffmpeg/bin/ffmpeg.exe`;
-export const FFPROBE = `C:/ffmpeg/bin/ffprobe.exe`;
+export const FFMPEG = `C:/tools/ffmpeg/bin/ffmpeg.exe`;
+export const FFPROBE = `C:/tools/ffmpeg/bin/ffprobe.exe`;
 
 export const MY_PATH = `${MY}/files`;

@@ -6,7 +6,7 @@ import { json } from "@sveltejs/kit";
 export async function GET({ params, locals }) {
     const user: Member = locals.user
     if (params.memberName == 'me') {
-        params.memberName = user.name
+        params.memberName = user.nickname
     }
     //await new Promise(resolve => setTimeout(resolve, 2000));
     const member = await prisma.member.findUniqueOrThrow({

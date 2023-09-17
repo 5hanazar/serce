@@ -12,7 +12,7 @@
 				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			body: JSON.stringify({ name: data.name, password: data.password }),
+			body: JSON.stringify({ nickname: data.nickname, password: data.password }),
 		});
 		if (response.ok) await goto(`${base}/posts`, { replaceState: true });
 		else if (response.status == 401) {
@@ -24,8 +24,8 @@
 
 <section>
 	<form on:submit={submit}>
-		<label for="name">Name</label>
-		<input name="name" type="text" />
+		<label for="nickname">Name</label>
+		<input name="nickname" type="text" />
 		<label for="password">Password</label>
 		<input name="password" type="password" />
 		<br />
