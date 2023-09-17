@@ -11,6 +11,8 @@ DATABASE_URL="mysql://username:password@localhost:3306/database"
 
 #JWT secret key
 PRIVATE_KEY="key"
+
+BODY_SIZE_LIMIT=0
 ```
 
 Generate a Prisma migration:
